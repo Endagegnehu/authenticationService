@@ -1,11 +1,8 @@
 package com.example.orderservice.dto;
 
-import com.example.orderservice.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,4 +12,5 @@ public class OrderDto {
     private String ccv;
     private String preferredPayment;
     private String totalCost;
+    private String preferredPaymentType;
 }

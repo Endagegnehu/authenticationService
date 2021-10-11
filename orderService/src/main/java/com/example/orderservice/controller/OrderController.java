@@ -34,7 +34,7 @@ public class OrderController {
     @Autowired
     private Queue queue;
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOrders(@PathVariable long id) throws JSONException {
 
         JSONObject responseBody = new JSONObject();
