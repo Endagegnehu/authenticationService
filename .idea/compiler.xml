@@ -9,14 +9,18 @@
         <outputRelativeToContentRoot value="true" />
         <module name="authenticationService" />
         <module name="config-service" />
+        <module name="payPalService" />
         <module name="discovery-service" />
         <module name="productService" />
+        <module name="orderService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authenticationService" target="11" />
       <module name="config-service" target="11" />
       <module name="discovery-service" target="11" />
+      <module name="orderService" target="11" />
+      <module name="payPalService" target="11" />
       <module name="productService" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -25,6 +29,8 @@
       <module name="authenticationService" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="orderService" options="-parameters" />
+      <module name="payPalService" options="-parameters" />
       <module name="productService" options="-parameters" />
     </option>
   </component>

@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService{
     public Order create(OrderDto request) {
 
 
-        Order order = new Order(request.getProductList(), request.getTotalCost());
+        Order order = new Order(request.getProductList(), request.getTotalCost(), request.getPreferredPaymentType());
 
         return orderRepository.save(order);
 

@@ -18,10 +18,12 @@ public class Order {
 
     private String productList;
     private String totalCost;
+    private String preferredPaymentType;
 
-    public Order(String productList, String totalCost) {
+    public Order(String productList, String totalCost, String preferredPaymentType) {
         this.productList = productList;
         this.totalCost = totalCost;
+         this.preferredPaymentType = preferredPaymentType;
     }
 
 }
