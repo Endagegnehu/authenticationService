@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: productService
+
+  cloud:
+    config:
+      enabled: true
+
+
+zuul:
+#  ribbon:
+#    eager-load:
+#      enabled: true
+
+  routes:
+    productService:
+      path: /products/**
+      url: http://localhost:8082/productService/products
