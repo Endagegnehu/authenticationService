@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableEurekaClient
 @EnableFeignClients
 @RestController
-public class PayPalServiceApplication {
+public class BankServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PayPalServiceApplication.class, args);
+        SpringApplication.run(BankServiceApplication.class, args);
     }
 
-    @PostMapping("/payPayService")
-    public String makePayPalPayment(){
+    @PostMapping("/bankService")
+    public String makeBankPayment(){
         return "OK";
     }
 }

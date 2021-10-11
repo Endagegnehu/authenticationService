@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>payPalService</artifactId>
+    <artifactId>bankService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>payPalService</name>
-    <description>payPalService</description>
+    <name>bankService</name>
+    <description>bankService</description>
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>

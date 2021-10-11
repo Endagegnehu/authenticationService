@@ -10,13 +10,15 @@
         <module name="authenticationService" />
         <module name="config-service" />
         <module name="payPalService" />
+        <module name="orderService" />
+        <module name="bankService" />
         <module name="discovery-service" />
         <module name="productService" />
-        <module name="orderService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authenticationService" target="11" />
+      <module name="bankService" target="11" />
       <module name="config-service" target="11" />
       <module name="discovery-service" target="11" />
       <module name="orderService" target="11" />
@@ -27,6 +29,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authenticationService" options="-parameters" />
+      <module name="bankService" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="orderService" options="-parameters" />
