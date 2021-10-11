@@ -31,9 +31,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Order create(OrderDto request) {
 
-
-        Order order = new Order(request.getProductList(), request.getTotalCost());
-
+        Order order = new Order(request.getProductList(), request.getCcv(), request.getPreferredPayment(), request.getTotalCost() );
         return orderRepository.save(order);
 
     }

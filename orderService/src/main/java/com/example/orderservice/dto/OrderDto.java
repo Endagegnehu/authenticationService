@@ -12,5 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDto {
     private String productList;
+    private String ccv;
+    private String preferredPayment;
     private String totalCost;
 }

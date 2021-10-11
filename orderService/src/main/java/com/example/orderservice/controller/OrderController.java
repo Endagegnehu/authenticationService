@@ -45,7 +45,7 @@ public class OrderController {
             return new ResponseEntity<>(optionalOrder.get(), HttpStatus.OK);
         } else {
             responseBody.put("success", false);
-            responseBody.put("message", "Passenger not found");
+            responseBody.put("message", "Order not found");
             return new ResponseEntity<>(responseBody.toString(), HttpStatus.BAD_REQUEST);
         }
 

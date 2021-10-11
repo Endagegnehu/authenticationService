@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping(value = "/")
 public class ProductController {
 
 

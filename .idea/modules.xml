@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/authenticationService/authenticationService.iml" filepath="$PROJECT_DIR$/authenticationService/authenticationService.iml" />
       <module fileurl="file://$PROJECT_DIR$/config-service/config-service.iml" filepath="$PROJECT_DIR$/config-service/config-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/discovery-service/discovery-service.iml" filepath="$PROJECT_DIR$/discovery-service/discovery-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orderService/orderService.iml" filepath="$PROJECT_DIR$/orderService/orderService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PaymentService/paymentService.iml" filepath="$PROJECT_DIR$/PaymentService/paymentService.iml" />
       <module fileurl="file://$PROJECT_DIR$/productService/productService.iml" filepath="$PROJECT_DIR$/productService/productService.iml" />
     </modules>
   </component>

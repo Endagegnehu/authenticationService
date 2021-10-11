@@ -17,11 +17,15 @@ public class Order {
     private long ID;
 
     private String productList;
+    private String ccv;
+    private String preferredPayment;
     private String totalCost;
 
-    public Order(String productList, String totalCost) {
+
+    public Order(String productList, String ccv, String preferredPayment, String totalCost) {
         this.productList = productList;
+        this.ccv = ccv;
+        this.preferredPayment = preferredPayment;
         this.totalCost = totalCost;
     }
-
 }
