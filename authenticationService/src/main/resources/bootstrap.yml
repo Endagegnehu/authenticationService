@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: authenticationService
+
+  cloud:
+    config:
+      enabled: true
+
+#zuul:
+#  routes:
+#    productService:
+#      path: /products/**
+#      serviceId: productService
+#      stripPrefix: true
+
