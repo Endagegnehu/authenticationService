@@ -5,11 +5,3 @@ spring:
   cloud:
     config:
       enabled: true
-
-#zuul:
-#  routes:
-#    productService:
-#      path: /products/**
-#      serviceId: productService
-#      stripPrefix: true
-

@@ -26,7 +26,7 @@ public class ProductController {
     @Autowired
     public ModelMapper mapper;
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getProducts(@PathVariable long id) throws JSONException {
 
         JSONObject responseBody = new JSONObject();
