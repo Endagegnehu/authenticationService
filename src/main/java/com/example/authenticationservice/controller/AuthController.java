@@ -36,8 +36,8 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody User user){
         user.setRole("ROLE_USER");
         userService.addUser(user);
-        final Optional<User> currentUser = userService.findUserByFirstName(user.getFirstName());
-        final UserDetails userDetails = userServiceImpl.getUserDetails(user.getFirstName());
+        final Optional<User> currentUser = userService.findUserByUsername(user.getUsername());
+        final UserDetails userDetails = userServiceImpl.getUserDetails(user.getUsername());
         final String jwt  = jwtUtil.generateToken(userDetails);
         logger.info("JWT: " + jwt);
         return ResponseEntity.ok(new UserRegistrationResponse(jwt));

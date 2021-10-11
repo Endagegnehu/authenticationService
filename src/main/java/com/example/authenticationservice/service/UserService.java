@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
     public void addUser(User user);
-    public Optional<User> findUserByFirstName(String firstName);
+    public Optional<User> findUserByUsername(String firstName);
 
     public UserDetails getUserDetails(String firstName);
 }

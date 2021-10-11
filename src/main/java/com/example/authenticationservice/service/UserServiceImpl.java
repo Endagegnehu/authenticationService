@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> findUserByFirstName(String firstName) {
-       return userRepository.findByFirstName(firstName);
+    public Optional<User> findUserByUsername(String username) {
+       return userRepository.findByUsername(username);
     }
 
     @Override
-    public UserDetails getUserDetails(String firstName) {
-        Optional<User> user = userRepository.findByFirstName(firstName);
-        user.orElseThrow(()-> new UsernameNotFoundException("No user found: "+ firstName));
+    public UserDetails getUserDetails(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        user.orElseThrow(()-> new UsernameNotFoundException("No user found: "+ username));
         return user.map(UserDetailsImpl::new).get();
     }
 
