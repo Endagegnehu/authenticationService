@@ -3,9 +3,12 @@ package com.example.orderservice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.tomcat.util.json.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.jms.Queue;
-import javax.xml.crypto.Data;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -29,13 +31,20 @@ import javax.xml.crypto.Data;
 @EnableJms
 public class PaymentServiceApplication {
 
+    final Logger log = LoggerFactory.getLogger(PaymentServiceApplication.class);
+
     @Value("${activemq.broker.url}")
     private String brokerUrl;
 
-    @Bean
-    public Queue queue() {
-        return (Queue) new ActiveMQQueue("orderplaced-queue");
-    }
+//    @Bean
+//    public Queue queue() {
+//        return (Queue) new ActiveMQQueue("orderplaced-queue");
+//    }
+//
+//    @Bean
+//    public Queue paymentQueue() {
+//        return (Queue) new ActiveMQQueue("orderpay-queue");
+//    }
 
     @Bean
     public ActiveMQConnectionFactory activeMQConnectionFactory() {
@@ -56,10 +65,12 @@ public class PaymentServiceApplication {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    BankFeignClient bankFeignClient;
+    private JmsTemplate jmsTemplate;
 
-    @Autowired
-    PaypalFeignClient paypalFeignClient;
+//    @Autowired
+//    private Queue queue = (Queue) new ActiveMQQueue("orderplaced-queue");
+    private Queue bankQueue = (Queue) new ActiveMQQueue("bank-queue");
+    private Queue payPalQueue = (Queue) new ActiveMQQueue("payPal-queue");
 
     @JmsListener(destination = "orderplaced-queue")
     public void consumeMessage(String message){
@@ -71,28 +82,27 @@ public class PaymentServiceApplication {
             e.printStackTrace();
         }
 
-        System.out.println(payment);
+        payment.setStatus("process");
 
-        if(payment.getPreferredPayment() == "bankService"){
-            bankFeignClient.pay(payment);
-        } else if(payment.getPreferredPayment() == "PaypalService"){
-            paypalFeignClient.pay(payment);
+        paymentRepository.save(payment);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String json = null;
+
+        try {
+            json = mapper.writeValueAsString(payment);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
 
-        payment.setStatus("done");
-        paymentRepository.save(payment);
-    }
+        if(payment.getPreferredPayment().equals("bankService")) {
+            jmsTemplate.convertAndSend(bankQueue, json);
+        } else if(payment.getPreferredPayment().equals("payPalService")) {
+            jmsTemplate.convertAndSend(payPalQueue, json);
+            System.out.println(json);
+        }
 
-    @FeignClient(name = "bankService")
-    interface BankFeignClient {
-        @PostMapping("")
-        Payment pay(@RequestBody() Payment payment);
-    }
-
-    @FeignClient(name = "paypalService")
-    interface PaypalFeignClient {
-        @PostMapping("")
-        Payment pay(@RequestBody() Payment payment);
     }
 
     public static void main(String[] args) {

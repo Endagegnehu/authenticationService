@@ -1,0 +1,176 @@
+version: "3.8"
+
+services:
+
+  activemq:
+    image: rmohr/activemq
+    env_file: ./.env
+    ports:
+      - $ACTIVEMQPA_LOCAL_PORT:$ACTIVEMQPA_DOCKER_PORT
+      - $ACTIVEMQPB_LOCAL_PORT:$ACTIVEMQPB_DOCKER_PORT
+
+  dicoveryapp:
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $DISCOVERY_SPRING_LOCAL_PORT:$DISCOVERY_SPRING_DOCKER_PORT
+    volumes:
+      - .dicoveryapp:/root/.m2
+    stdin_open: true
+    tty: true
+
+  configapp:
+    build:
+      context: ./config-service
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $CONFIG_SPRING_LOCAL_PORT:$CONFIG_SPRING_DOCKER_PORT
+    volumes:
+      - .configapp:/root/.m2
+    stdin_open: true
+    tty: true
+
+  authenticationmysqldb:
+    image: mysql:8.0
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+#      - MYSQLDB_USER=$MYSQLDB_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+#    entrypoint:
+#      sh -c "
+#      echo 'CREATE DATABASE IF NOT EXISTS account-microservice; CREATE DATABASE IF NOT EXISTS order-microservice; CREATE DATABASE IF NOT EXISTS payment-microservice; CREATE DATABASE IF NOT EXISTS product-microservice; CREATE DATABASE IF NOT EXISTS shipped-microservice;' > /docker-entrypoint-initdb.d/init.sql;
+#      /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#      "
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - authenticationdb:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  gatewayapp:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./authenticationService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $GATEWAY_SPRING_LOCAL_PORT:$GATEWAY_SPRING_DOCKER_PORT
+    volumes:
+      - .gatewayapp:/root/.m2
+    stdin_open: true
+    tty: true
+
+  bankservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./bankService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $BANK_SPRING_LOCAL_PORT:$BANK_SPRING_DOCKER_PORT
+    volumes:
+      - .bankservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+  orderservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./orderService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $ORDER_SPRING_LOCAL_PORT:$ORDER_SPRING_DOCKER_PORT
+    volumes:
+      - .orderservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+  paymentservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./PaymentService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $PAYMENT_SPRING_LOCAL_PORT:$PAYMENT_SPRING_DOCKER_PORT
+    volumes:
+      - .paymentservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+  paypalservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./payPalService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $PAYPAL_SPRING_LOCAL_PORT:$PAYPAL_SPRING_DOCKER_PORT
+    volumes:
+      - .paypalservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+  productservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./productService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $PRODUCT_SPRING_LOCAL_PORT:$PRODUCT_SPRING_DOCKER_PORT
+    volumes:
+      - .productservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+  shippingservice:
+    depends_on:
+      - authenticationmysqldb
+      - configapp
+    build:
+      context: ./shippingService
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SHIPPING_SPRING_LOCAL_PORT:$SHIPPING_SPRING_DOCKER_PORT
+    volumes:
+      - .shippingservice:/root/.m2
+    stdin_open: true
+    tty: true
+
+
+volumes:
+  authenticationdb:
+  bankservice:
+  orderservice:
+  paymentservice:
+  paypalservice:
+  productservice:
+  shippingservice:
