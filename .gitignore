@@ -100,3 +100,18 @@ build/
 
 ### VS Code ###
 .vscode/
+!/.gitignore
+!/.idea/
+!/.idea/
+!/.gitignore
+/.bankservice/
+/.configapp/
+/.dicoveryapp/
+/.gatewayapp/
+/.idea/
+/.m2/
+/.orderservice/
+/.paymentservice/
+/.paypalservice/
+/.productservice/
+/.shippingservice/
