@@ -23,12 +23,14 @@ management:
         include: refresh
 
 eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://172.19.141.91:8761/eureka
   instance:
     preferIpAddress: true
-    ip-address: 172.19.141.91
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
 
 server:
   port: 8888

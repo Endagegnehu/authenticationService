@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      nodePort: 30403
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  selector:
+    matchLabels:
+      app: product-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: endagegnehu/sa-ecommerce-proj-product_app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082

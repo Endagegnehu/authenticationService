@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: shipping-service
+spec:
+  selector:
+    app: shipping-service
+  ports:
+    - protocol: TCP
+      port: 8095
+      nodePort: 30703
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-service
+spec:
+  selector:
+    matchLabels:
+      app: shipping-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shipping-service
+    spec:
+      containers:
+        - name: shipping-service
+          image: endagegnehu/sa-ecommerce-proj-shipping_app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8095

@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: paypal-service
+spec:
+  selector:
+    app: paypal-service
+  ports:
+    - protocol: TCP
+      port: 8091
+      nodePort: 30903
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paypal-service
+spec:
+  selector:
+    matchLabels:
+      app: paypal-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: paypal-service
+    spec:
+      containers:
+        - name: paypal-service
+          image: endagegnehu/sa-ecommerce-proj-paypal_app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8091

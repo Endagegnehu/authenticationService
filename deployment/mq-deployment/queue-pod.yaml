@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-activemq-pod
+  labels:
+    app: k8s-activemq
+spec:
+  containers:
+    - name: k8s-activemq-container
+      image: nikbhi15docker/k8s-active-mq

@@ -3,9 +3,9 @@ server:
 
 eureka:
   instance:
-    prefer-ip-address: true
+    hostname: "${HOSTNAME}.eureka"
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    register-with-eureka: false
+    fetch-registry: false
     serviceUrl:
-      defaultZone: http://172.19.141.91:8761/
+      defaultZone: ${EUREKA_SERVER_ADDRESS}
